@@ -31,6 +31,19 @@ if ( !defined('INCHARBROWSER') )
    die("Hacking attempt");
 }
 
+/**
+ * environment loader
+ *
+ * @param $variable
+ * @param $default
+ *
+ * @return array|false|string
+ */
+function env($variable, $default)
+{
+    return getenv($variable) ? getenv($variable) : $default;
+}
+
 /****************************************************
 **                  SQL Settings                   **
 **  Database account only needs SELECT and UPDATE  **

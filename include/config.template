@@ -31,33 +31,27 @@ if ( !defined('INCHARBROWSER') )
    die("Hacking attempt");
 }
 
-function env($variable, &$config)
-{
-    if ($ev = getenv($variable))
-       $config = $ev;
-}
-
 /****************************************************
 **                  SQL Settings                   **
 **  Database account only needs SELECT and UPDATE  **
 **  privelages                                     **
 ****************************************************/
-$cb_host = env('DB_HOST', 'localhost');
-$cb_user = env('DB_USER', 'username');
-$cb_pass = env('DB_PASSWORD', 'password');
-$cb_db   = env('DB_NAME', 'database_name');
-$cb_port = env('DB_PORT', 3306);
+$cb_db     =   "peq";
+$cb_host   =   "localhost";
+$cb_user   =   "";
+$cb_pass   =   "";
+$cb_port   =   3306;
 
 //Multi-tenancy, if you need a seperate db connection
 //for your content db, set this to true and set
 //your content db connection info here. If you don't
 //know what this is, leave it alone.
 $cb_use_content_db = false;
-$cb_content_host = env('CONTENT_DB_HOST', 'remote_host');
-$cb_content_user = env('CONTENT_DB_USER', 'remote_username');
-$cb_content_pass = env('CONTENT_DB_PASSWORD', 'remote_password');
-$cb_content_db   = env('CONTENT_DB_NAME', 'remote_database_name');
-$cb_content_port = env('CONTENT_DB_PORT', 3306);
+$cb_content_db     =   "peq";
+$cb_content_host   =   "localhost";
+$cb_content_user   =   "";
+$cb_content_pass   =   "";
+$cb_content_port   =   3306;
 /***************************************************/
 
 
@@ -190,7 +184,7 @@ $cb_blockversioncheck = 0;
 **   0 - hide/disable bots                          **
 **   1 - show bots                                  **
 *****************************************************/
-$cb_show_bots = 1; 
+$cb_show_bots = 0; 
 
 
 /*****************************************************

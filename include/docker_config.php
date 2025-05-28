@@ -29,11 +29,6 @@ if ( !defined('INCHARBROWSER') )
 
 // Overwrites the config file settings for the database
 // with environmental variables (if they exist)
-function env($variable, &$config)
-{
-    if ($ev = getenv($variable))
-       $config = $ev;
-}
 
 //overwrite the database config 
 //settings with environment variables

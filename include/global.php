@@ -52,13 +52,14 @@ if ( !defined('INCHARBROWSER') )
 
 //max bag slots, this will cap larger bags
 //to only display so many slots
-define("MAX_BAG_SLOTS", 10);
+define("MAX_BAG_SLOTS", 200);
 
 //few constants for allitems.type
 define("EQUIPMENT", 1);
 define("INVENTORY", 2);
 define("BANK", 3);
 define("SHAREDBANK", 4);
+define("CURSOR", 5);
 
 //spell effect types
 define("SE_ARMORCLASS", 1);

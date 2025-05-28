@@ -628,8 +628,6 @@ TPL;
       $this->_allitems = array();
 
       //FETCH INVENTORY ROWS
-      // pull bots inventory slotid is loaded as
-      // "myslot" since items table also has a slotid field.
       $tpl = <<<TPL
       SELECT item_id AS itemid, 
              augment_1 AS augslot1, 
@@ -777,7 +775,7 @@ TPL;
       //make sure our column exists in the record
       if (!array_key_exists($column_name, $cached_record))
       {
-            $this->_error->message_die($this->_language['MESSAGE_ERROR'], sprintf($this->_language['MESSAGE_PROF_NOCACHE'], $data_key, $table_name, $column_name));
+         return $default;
       }
       
       //return the value
@@ -849,7 +847,7 @@ TPL;
             //we just store it in the root structure
             $this->_cached_records[$table_name] = $this->_sql->nextrow($result);
          } 
-         else $this->_error->message_die($this->_language['MESSAGE_ERROR'], sprintf($this->_language['MESSAGE_PROF_NOROWS'], $table_name));
+         else $this->_cached_records[$table_name] = array();
       }
       
       //hand the table/record over

@@ -156,6 +156,8 @@ $cb_template->assign_both_vars(array(
 );
 
 $cb_template->assign_vars(array(  
+   'ROOT_URL' => $charbrowser_root_url,
+   
    'L_HEADER_INVENTORY' => $language['CHAR_INVENTORY'],
    'L_WEIGHT' => $language['CHAR_WEIGHT'],
    'L_WEIGHT_MAX' => $language['CORPSE_WEIGHT_MAX'],
@@ -278,9 +280,9 @@ foreach ($allitems as $value) {
          'ROWS' => floor($value->slotcount()/2))
       );
       
-      foreach($tempbag as $slotid => $slot) {
+      foreach($tempbag as $slot_id => $slot) {
          $cb_template->assign_block_vars("bags.bagslots", array( 
-            'BS_SLOT' => $slotid)
+            'BS_SLOT' => $slot_id)
          );
          //if there's array data in it, it's got an item
          if (is_array($slot)) {

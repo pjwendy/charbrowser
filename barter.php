@@ -124,32 +124,32 @@ if ($name)
    //we need to filter certain slots out if the seller has privacy settings
    if ($char->Permission('bags')) 
    {
-      $filters[] = 'inventory.slotid NOT BETWEEN '.SLOT_INVENTORY_START.' AND '.SLOT_INVENTORY_END;
-      $filters[] = 'inventory.slotid NOT BETWEEN '.SLOT_INVENTORY_BAGS_START.' AND '.SLOT_INVENTORY_BAGS_END;
+      $filters[] = 'inventory.slot_id NOT BETWEEN '.SLOT_INVENTORY_START.' AND '.SLOT_INVENTORY_END;
+      $filters[] = 'inventory.slot_id NOT BETWEEN '.SLOT_INVENTORY_BAGS_START.' AND '.SLOT_INVENTORY_BAGS_END;
    }
    if ($char->Permission('bank'))
    {
-      $filters[] = 'inventory.slotid NOT BETWEEN '.SLOT_BANK_START.' AND '.SLOT_BANK_END;
-      $filters[] = 'inventory.slotid NOT BETWEEN '.SLOT_BANK_BAGS_START.' AND '.SLOT_BANK_BAGS_END;
+      $filters[] = 'inventory.slot_id NOT BETWEEN '.SLOT_BANK_START.' AND '.SLOT_BANK_END;
+      $filters[] = 'inventory.slot_id NOT BETWEEN '.SLOT_BANK_BAGS_START.' AND '.SLOT_BANK_BAGS_END;
    }
    if ($char->Permission('sharedbank'))
    {
-      $filters[] = 'inventory.slotid NOT BETWEEN '.SLOT_SHAREDBANK_START.' AND '.SLOT_SHAREDBANK_END;
-      $filters[] = 'inventory.slotid NOT BETWEEN '.SLOT_SHAREDBANK_BAG_START.' AND '.SLOT_SHAREDBANK_BAG_END;
+      $filters[] = 'inventory.slot_id NOT BETWEEN '.SLOT_SHAREDBANK_START.' AND '.SLOT_SHAREDBANK_END;
+      $filters[] = 'inventory.slot_id NOT BETWEEN '.SLOT_SHAREDBANK_BAG_START.' AND '.SLOT_SHAREDBANK_BAG_END;
    }
    
    $where = generate_where($filters);
 
 
    $tpl = <<<TPL
-      SELECT inventory.itemid, 
+      SELECT inventory.item_id as itemid, 
              COUNT(*) as seller_qty,
              SUM(charges) as seller_charges
       FROM inventory
       LEFT JOIN character_data
-             ON inventory.charid = character_data.id
+             ON inventory.character_id = character_data.id
       %s
-      GROUP BY inventory.itemid
+      GROUP BY inventory.item_id
 TPL;
 
    $query = sprintf($tpl, $where);
@@ -163,21 +163,21 @@ TPL;
 //QUERY ALL THE BUYER ITEMS, PREFILTERED BY BUYER FIELDS
 //build the where clause
 $filters = array();
-if ($buyer) $filters[] = "buychar.name = '".$buyer."'";
+if ($buyer) $filters[] = "buyer.char_name = '".$buyer."'";
 //cant buy from yourself
-if ($name) $filters[] = "buychar.name != '".$name."'";
+if ($name) $filters[] = "buyer.char_name != '".$name."'";
 $where = generate_where($filters);
 
 
 //no seller means we just show everything being bought
 $tpl = <<<TPL
-   SELECT buychar.name as charactername,
-          buyer.price as buyerprice,
-          buyer.itemid,
-          buyer.quantity 
-   FROM character_data buychar
-   INNER JOIN buyer
-           ON buychar.id = buyer.charid
+   SELECT buyer.char_name as charactername,
+          buyer_buy_lines.item_price as buyerprice,
+          buyer_buy_lines.item_id as itemid,
+          buyer_buy_lines.item_qty as quantity 
+   FROM buyer
+   INNER JOIN buyer_buy_lines
+           ON buyer_buy_lines.buyer_id = buyer.id
    %s
 TPL;
 

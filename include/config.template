@@ -31,6 +31,12 @@ if ( !defined('INCHARBROWSER') )
    die("Hacking attempt");
 }
 
+function env($variable, &$config)
+{
+    if ($ev = getenv($variable))
+       $config = $ev;
+}
+
 /****************************************************
 **                  SQL Settings                   **
 **  Database account only needs SELECT and UPDATE  **
